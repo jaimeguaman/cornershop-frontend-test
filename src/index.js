@@ -1,18 +1,26 @@
-import { useEffect } from 'react';
-import ReactDOM from 'react-dom';
 
-// You don't have to use `fetch` btw, use whatever you want
-const getCounters = () => 
-  fetch('/api/v1/counter', { method: 'get' })
-    .then(res => res.json());
+import ReactDOM from 'react-dom'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from 'react-router-dom'
+
+import Home from 'pages/Home'
+import Counters from 'pages/Counters'
 
 const App = () => {
-  useEffect(() => {
-    getCounters().then(console.log, console.error);
-  }, []);
-
   return (
-    <h1>Hello, Cornershop!</h1>
+    <Router>
+        <Switch>
+          <Route path="/counters">
+            <Counters />
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
+    </Router>
   );
 };
 
