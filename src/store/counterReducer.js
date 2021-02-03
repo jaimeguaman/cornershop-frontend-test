@@ -13,10 +13,7 @@ const counterReducer = (state, action) => {
       })}
     }
     case 'FILTERED_LIST': {
-      return {...state, filteredCounters: action.payload?.map(counter => {
-        // counter.selected = false
-        return counter
-      })}
+      return {...state, filteredCounters: action.payload}
     }
     case 'INCREMENT': {
       return {...state, counters: state.counters?.map(c => {

@@ -27,6 +27,7 @@ function CounterList ({counters}) {
   }
 
   const handleRefreshButton = useCallback( () => {
+    actions.search('')
     actions.list()
   }, [])
 
