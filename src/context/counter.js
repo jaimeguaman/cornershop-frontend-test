@@ -20,6 +20,7 @@ function CounterProvider ({children}) {
     },
     list() {
       dispatch({type: 'LOADING_START'})
+      dispatch({type: 'REFRESH_TIMES'})
       return CounterService.list()
         .then((data) => {
           dispatch({type: 'LIST', payload: data})
@@ -55,6 +56,12 @@ function CounterProvider ({children}) {
           dispatch({type: 'REMOVE', payload: id})
         })
       .catch(counterActionError)
+    },
+    toggleSelect (id) {
+      dispatch({type: 'TOGGLE_SELECTED', payload: id})
+    },
+    search (text) {
+      dispatch({type: 'SEARCH_TEXT', payload: text})
     }
   }
 

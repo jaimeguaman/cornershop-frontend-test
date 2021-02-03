@@ -7,10 +7,16 @@ const counterReducer = (state, action) => {
     case 'ERROR':
       return {...state, error: action.payload}
     case 'LIST': {
-      return {...state, counters: action.payload}
+      return {...state, counters: action.payload?.map(counter => {
+        counter.selected = false
+        return counter
+      })}
     }
     case 'FILTERED_LIST': {
-      return {...state, filteredCounters: action.payload}
+      return {...state, filteredCounters: action.payload?.map(counter => {
+        // counter.selected = false
+        return counter
+      })}
     }
     case 'INCREMENT': {
       return {...state, counters: state.counters?.map(c => {
@@ -26,7 +32,18 @@ const counterReducer = (state, action) => {
       return {...state, counters: state.counters?.filter(c => {c.id !== action.payload})}
     }
     case 'ADD': {
-      return {...state, counters: [...state.counters, action.payload]}
+      return {...state, counters: [...state.counters, {...action.payload, selected: false}]}
+    }
+    case 'REFRESH_TIMES': {
+      return {...state, refreshTimes: state.refreshTimes + 1}
+    }
+    case 'TOGGLE_SELECTED': {
+      return {...state, counters: state.counters?.map(c => {
+        return c.id === action.payload ? {...c, selected: !c.selected} : c
+      })}
+    }
+    case 'SEARCH_TEXT': {
+      return {...state, searchText: action.payload}
     }
   }
 }

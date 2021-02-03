@@ -28,6 +28,7 @@ function CountersCreate () {
       }
       actions.add(title)
         .then(() => {
+          actions.search('')
           history.push('/counters/')
           console.log('Saved ok')
         })

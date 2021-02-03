@@ -1,5 +1,5 @@
 
-import { useEffect, useContext, useState, useCallback } from 'react'
+import { useEffect, useContext } from 'react'
 import { Switch, Route, useRouteMatch, Link } from "react-router-dom";
 import CounterState, { CounterActions } from 'context/counter'
 import CountersCreate from 'pages/CountersCreate'
@@ -14,8 +14,6 @@ function CountersHome () {
   const { path } = useRouteMatch();
 
   //component state
-  const [filterText, setFiltertext] = useState('')
-  const [refreshTimes, setRefreshTimes] = useState(0)
   const createCounterRoutePath = `${path}add/`
   const loading = state.loading && !state.error
   const hasCounters = state.counters?.length && !state.error && !state.loading
@@ -25,13 +23,16 @@ function CountersHome () {
 
   const getCounters = () => {
     actions.list()
-    setRefreshTimes(refreshTimes + 1)
   }
 
-  const filterCounters = (token) => {
+  const filterCounters = (text) => {
     actions.filteredList(
-      state.counters.filter(counter => !token ? true : counter.title.includes(token))
+      state.counters.filter(counter => !text ? true : counter.title.includes(text))
     )
+  }
+
+  const setFilterText = (text) => {
+    actions.search(text)
   }
 
   const CountersEmpty = () => {
@@ -62,35 +63,19 @@ function CountersHome () {
     )
   }
 
-  const ListHelper = () => {
-    const handleRefreshButton = useCallback( () => {
-      getCounters()
-    })
-    return (
-      <p>
-        <strong>{state.filteredCounters.length} Items</strong>
-        <span>{refreshTimes} Times</span>
-        <button onClick={handleRefreshButton}>Refresh</button>
-      </p>
-    )
-  }
-
   useEffect(() => {
     getCounters()
   }, [])
 
   useEffect(() => {
-    filterCounters(filterText)
-  }, [state.counters, filterText])
+    filterCounters(state.searchText)
+  }, [state.counters, state.searchText])
 
   return (
     <div>
       <section>
         <div>
-          <Search onChange={setFiltertext} />
-        </div>
-        <div>
-          { hasCounters ? <ListHelper/> : null}
+          <Search onChange={setFilterText} text={state.searchText}/>
         </div>
         <div className="list-container">
           { loading && <Loading/> }
