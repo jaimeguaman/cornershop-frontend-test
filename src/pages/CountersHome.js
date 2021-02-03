@@ -1,5 +1,5 @@
 
-import { useEffect, useContext, useState } from 'react'
+import { useEffect, useContext, useState, useCallback } from 'react'
 import { Switch, Route, useRouteMatch, Link } from "react-router-dom";
 import CounterState, { CounterActions } from 'context/counter'
 import CountersCreate from 'pages/CountersCreate'
@@ -9,12 +9,14 @@ import Loading from 'components/Loading'
 import Search from 'components/Search'
 
 function CountersHome () {
-  console.log('COUNTER HOME RENDER')
   const actions = useContext(CounterActions)
   const state = useContext(CounterState)
   const { path } = useRouteMatch();
-  const createCounterRoutePath = `${path}add/`
+
+  //component state
   const [filterText, setFiltertext] = useState('')
+  const [refreshTimes, setRefreshTimes] = useState(0)
+  const createCounterRoutePath = `${path}add/`
   const loading = state.loading && !state.error
   const hasCounters = state.counters?.length && !state.error && !state.loading
   const hasFilteredCounters = state.filteredCounters?.length && !state.error && !state.loading
@@ -23,6 +25,7 @@ function CountersHome () {
 
   const getCounters = () => {
     actions.list()
+    setRefreshTimes(refreshTimes + 1)
   }
 
   const filterCounters = (token) => {
@@ -59,6 +62,19 @@ function CountersHome () {
     )
   }
 
+  const ListHelper = () => {
+    const handleRefreshButton = useCallback( () => {
+      getCounters()
+    })
+    return (
+      <p>
+        <strong>{state.filteredCounters.length} Items</strong>
+        <span>{refreshTimes} Times</span>
+        <button onClick={handleRefreshButton}>Refresh</button>
+      </p>
+    )
+  }
+
   useEffect(() => {
     getCounters()
   }, [])
@@ -72,6 +88,9 @@ function CountersHome () {
       <section>
         <div>
           <Search onChange={setFiltertext} />
+        </div>
+        <div>
+          { hasCounters ? <ListHelper/> : null}
         </div>
         <div className="list-container">
           { loading && <Loading/> }
