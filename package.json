@@ -12,6 +12,7 @@
   "author": "Cornershop",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.21.1",
     "body-parser": "^1.16.1",
     "concurrently": "^5.1.0",
     "cors": "^2.8.5",
