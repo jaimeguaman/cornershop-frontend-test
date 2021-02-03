@@ -10,25 +10,29 @@ function CounterProvider ({children}) {
   const [state, dispatch] = useReducer(counterReducer, initialState)
 
   const counterActionError = (data) => {
-    console.error(data)
     dispatch({type: 'LOADING_END'})
+    dispatch({type: 'ERROR', payload: true})
   }
 
   const actions = {
+    filteredList (data) {
+      dispatch({type: 'FILTERED_LIST', payload: data})
+    },
     list() {
       dispatch({type: 'LOADING_START'})
       return CounterService.list()
         .then((data) => {
-          dispatch({type: 'LOADING_END'})
           dispatch({type: 'LIST', payload: data})
+          dispatch({type: 'LOADING_END'})
         })
       .catch(counterActionError)
     },
     increment(id) {
       dispatch({type: 'INCREMENT', payload: id})
       return CounterService.increment(id)
-        .then(() => {
-        }, () => {dispatch({type: 'DECREMENT', payload: id})})
+        .then(() => { }, () => {
+          dispatch({type: 'DECREMENT', payload: id}) // RESTORE WHEN FAILS
+        })
       .catch(counterActionError)
     },
     decrement(id) {

@@ -4,8 +4,13 @@ const counterReducer = (state, action) => {
       return {...state, loading: true}
     case 'LOADING_END':
       return {...state, loading: false}
+    case 'ERROR':
+      return {...state, error: action.payload}
     case 'LIST': {
       return {...state, counters: action.payload}
+    }
+    case 'FILTERED_LIST': {
+      return {...state, filteredCounters: action.payload}
     }
     case 'INCREMENT': {
       return {...state, counters: state.counters?.map(c => {

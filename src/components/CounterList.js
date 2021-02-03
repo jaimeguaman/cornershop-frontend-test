@@ -1,10 +1,8 @@
 import React, { useContext } from 'react'
-import CounterState, { CounterActions } from 'context/counter'
+import { CounterActions } from 'context/counter'
 import CounterItem from 'components/CounterItem'
 
-function CounterList () {
-  console.log('counter list')
-  const state = useContext(CounterState)
+function CounterList ({counters}) {
   const actions = useContext(CounterActions)
 
   const countChanged = (id, value) => {
@@ -19,7 +17,7 @@ function CounterList () {
   }
   return (
     <ul>
-      {state.counters.map((counter) => (
+      {counters.map((counter) => (
         <CounterItem onCountChanged={countChanged} key={counter.id} item={counter} />
       ))}
     </ul>

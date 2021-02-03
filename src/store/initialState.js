@@ -1,6 +1,8 @@
 const initialState = {
   loading: true,
-  counters: []
+  error: false,
+  counters: [],
+  filteredCounters: []
 }
 
 export default  initialState
