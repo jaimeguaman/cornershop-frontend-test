@@ -1,10 +1,9 @@
-
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Counters from 'pages/Counters'
+import CountersCreate from 'pages/CountersCreate'
 
 it('renders without crashing', () => {
   const div = document.createElement('div')
-  ReactDOM.render(<Counters />, div)
+  ReactDOM.render(<CountersCreate />, div)
   ReactDOM.unmountComponentAtNode(div)
 })

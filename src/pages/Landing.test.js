@@ -1,10 +1,10 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Home from 'pages/Home'
+import Landing from 'pages/Landing'
 
 it('renders without crashing', () => {
   const div = document.createElement('div')
-  ReactDOM.render(<Home />, div)
+  ReactDOM.render(<Landing />, div)
   ReactDOM.unmountComponentAtNode(div)
 })

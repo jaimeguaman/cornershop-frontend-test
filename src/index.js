@@ -6,21 +6,24 @@ import {
   Route
 } from 'react-router-dom'
 
-import Home from 'pages/Home'
-import Counters from 'pages/Counters'
+import Landing from 'pages/Landing'
+import CountersHome from 'pages/CountersHome'
+import { CounterProvider } from 'context/counter'
 
 const App = () => {
   return (
-    <Router>
-        <Switch>
-          <Route path="/counters">
-            <Counters />
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-    </Router>
+    <CounterProvider>
+      <Router>
+          <Switch>
+            <Route path="/counters/">
+              <CountersHome />
+            </Route>
+            <Route path="/">
+              <Landing />
+            </Route>
+          </Switch>
+      </Router>
+    </CounterProvider>
   );
 };
 
