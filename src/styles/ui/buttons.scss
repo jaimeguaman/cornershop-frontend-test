@@ -8,8 +8,9 @@
   color: var(--app-greyscale-color-600);
   cursor: pointer;
   display: flex;
-  font-weight: 600;
-  padding: 10px 18px;
+  font-weight: 500;
+  font-size: 17px;
+  padding: 9px 18px;
   transform: translateZ(0);
   transition: .3s ease-in-out background-color,
               .3s ease-in-out transform,
@@ -41,8 +42,16 @@
   }
 }
 
-@mixin button-full-width {
+@mixin full-width-button {
   width: 100%;
+}
+
+@mixin flat-button {
+  background-color: transparent;
+  border: none;
+  &:focus {
+    outline: none; // make sure yo provide an alternative style
+  }
 }
 
 @mixin shadow-scaling-button {
@@ -72,8 +81,24 @@
       background-color: darken($app-tint-color, 5%);
     }
   }
-
 }
+
+@mixin circle-button {
+  @include flat-button;
+  align-items: center;
+  border-radius: 50%;
+  background-color: var( --app-greyscale-color-400);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  @include for-size(desktop-up) {
+    &:hover {
+      box-shadow: 0px 4px 6px rgba(0,0,0, .05);
+      transform: scale(1.02);
+    }
+  }
+}
+
 
 /* @mixin primary-button {
   @include standard-button;

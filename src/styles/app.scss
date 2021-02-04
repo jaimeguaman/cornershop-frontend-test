@@ -2,6 +2,7 @@
 
 @import 'styles/utils.scss';
 @import 'styles/ui/buttons.scss';
+@import 'styles/ui/form.scss';
 @import 'styles/ui/typography.scss';
 
 :root {
@@ -13,7 +14,7 @@
   --app-greyscale-color-100: #fff;
   --app-greyscale-color-200: #FBFBFB;
   --app-greyscale-color-300: #E5E5E5;
-  --app-greyscale-color-400: #dcdcdf;
+  --app-greyscale-color-400: #C4C4C4;
   --app-greyscale-color-500: #888b90;
   --app-greyscale-color-600: #4A4A4A;
   --app-greyscale-color-700: #212121;
@@ -58,6 +59,7 @@ body {
 a {
   color: var(--app-greyscale-color-500);
   font-weight: 500;
+  -webkit-tap-highlight-color: transparent;
   &:hover {
     color: var(--app-greyscale-color-700)
   }
@@ -66,6 +68,9 @@ a {
 .viewport-wrapper {
   &.-full-height {
     @include fit-viewport-height;
+  }
+  &.-flat {
+    padding: 0;
   }
   @include for-size(phone-only) {
     width: 100%;
@@ -84,12 +89,40 @@ a {
   }
 }
 
-// global style to avoid generate extra styles for standarized buttons
+// global styles to avoid generate repeated extra styles for standarized styles
 .standard-button {
   @include standard-button;
 }
 
 .accent-button {
   @include accent-button;
+}
+
+.standard-form {
+  .form-control {
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    input[type="password"],
+    input[type="search"],
+    input[type="tel"] {
+      @include standard-input;
+      width: 100%;
+      margin-top: 5px;
+    }
+
+    label {
+      @include standard-label
+    }
+
+    .feedback-text {
+      margin: 5px 0 0 0;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 15px;
+      line-height: 20px;
+      color: var(--app-greyscale-color-500)
+    }
+  }
 }
 
