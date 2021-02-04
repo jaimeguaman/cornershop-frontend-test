@@ -8,6 +8,13 @@
   width: 100%;
 }
 
+@mixin collapsable-text {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 @mixin fit-viewport-height {
   height: auto;
   min-height: 100%;

@@ -1,4 +1,8 @@
 import { useState, useEffect, useCallback } from 'react'
+import { ReactComponent as PlusIcon } from 'assets/plus-icon.svg'
+import { ReactComponent as MinusIcon } from 'assets/minus-icon.svg'
+
+import 'styles/ui/CounterItem.scss'
 
 function CounterItem ({item = {}, onCountChanged, onToggleSelected}) {
   const [isDecrementDisabled, setDecrementDisable] = useState(item.count < 1 ? true : false)
@@ -13,17 +17,30 @@ function CounterItem ({item = {}, onCountChanged, onToggleSelected}) {
   }, [])
 
   const toggleSelected = useCallback((e) => {
-    if(e.target.nodeName !== 'BUTTON') {
-      typeof onToggleSelected === 'function' && onToggleSelected(item.id)
+    if(typeof e.target.className?.indexOf === 'function') {
+      if (e.target.className.indexOf('js-can-select') !== -1) {
+        typeof onToggleSelected === 'function' && onToggleSelected(item.id)
+      }
     }
   }, [])
 
   return (
-    <li onClick={toggleSelected} style={item.selected ? {backgroundColor: 'red'} : {}}>
-      <p>{item.title}</p>
-      <button disabled={isDecrementDisabled} onClick={(e) => handleChange(e, -1)}>-</button>
-      <p>{item.count}</p>
-      <button onClick={(e) => handleChange(e, 1)}>+</button>
+    <li onClick={toggleSelected} className={`js-can-select counter-item ${item.selected ? '-selected' : '' }`}>
+      <p className="counter-title js-can-select">{item.title}</p>
+      <div className="counter-controls">
+        <button
+          className="decrease-button"
+          disabled={isDecrementDisabled}
+          onClick={(e) => handleChange(e, -1)}>
+          <MinusIcon />
+        </button>
+        <p className={`${isDecrementDisabled ? '-disabled' : '' }`}>{item.count}</p>
+        <button
+          className="increase-button"
+          onClick={(e) => handleChange(e, 1)}>
+            <PlusIcon />
+        </button>
+      </div>
     </li>
   )
 }

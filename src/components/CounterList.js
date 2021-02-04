@@ -2,6 +2,7 @@ import { useContext, useCallback, useEffect, useState } from 'react'
 import CounterState, { CounterActions } from 'context/counter'
 import CounterItem from 'components/CounterItem'
 import { getCounter } from 'utils'
+import 'styles/ui/CounterList.scss'
 
 function CounterList ({counters}) {
   const actions = useContext(CounterActions)
@@ -19,7 +20,7 @@ function CounterList ({counters}) {
     }
   }
 
-  const selectedChanged = (id, value) => {
+  const selectedChanged = (id) => {
     const counter = getCounter(counters, id)
     if (counter) {
       actions.toggleSelect(counter.id)
@@ -81,11 +82,11 @@ function CounterList ({counters}) {
   }, [counters])
 
   return (
-    <div>
-      <div>
+    <div className="counter-list">
+      <div className="list-helper-container">
         <ListHelper />
       </div>
-      <ul>
+      <ul className="counter-items">
         {counters.map((counter) => (
           <CounterItem onCountChanged={countChanged} onToggleSelected={selectedChanged} key={counter.id} item={counter} />
         ))}

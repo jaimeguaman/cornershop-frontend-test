@@ -1,0 +1,68 @@
+@import 'styles/utils';
+@import 'styles/variables';
+@import 'styles/ui/buttons';
+
+.counter-item {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  align-items: center;
+  padding: 15px 14px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  transition: .1s ease-in-out background-color;
+  will-change: background-color;
+  &.-selected {
+    background-color: rgba($app-tint-color, .2);
+  }
+  .counter-title {
+    @include collapsable-text;
+    color: var(--app-greyscale-color-700);
+    font-style: normal;
+    font-weight: normal;
+    font-size: 17px;
+    line-height: 23px;
+    letter-spacing: 0.02em;
+    max-width: calc(100% - 80px);
+    margin: 0;
+  }
+  .counter-controls {
+    width: 80px;
+    display: flex;
+    margin-left: auto;
+    justify-content: flex-end;
+    button {
+      @include flat-button;
+      display: flex;
+      align-items: center;
+      svg {
+        width: 14px;
+        path,
+        rect {
+          fill: var(--app-tint-color);
+        }
+      }
+      &:disabled {
+        svg {
+          path,
+          rect {
+            fill:  #DCDCDF;
+          }
+        }
+      }
+    }
+    p {
+      margin: 0;
+      width: 40px;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 22px;
+      text-align: center;
+      letter-spacing: -0.408px;
+      &.-disabled {
+        color: var(--app-greyscale-color-500);
+      }
+    }
+  }
+}
