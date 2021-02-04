@@ -1,0 +1,40 @@
+@keyframes pulse {
+  from {
+    transform: scale(1)
+  }
+
+  50% {
+    transform: scale(1.2)
+
+  }
+
+  to {
+    transform: scale(1)
+  }
+}
+
+@keyframes fadeLoop{
+  0% { opacity: .6; }
+  50% { opacity: .9; }
+  100% { opacity: .6; }
+}
+
+.loading-indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  svg {
+    overflow: visible;
+    .c1 {
+      animation: fadeLoop 1s infinite;
+    }
+    .c2,
+    .c3 {
+      transform-origin: center center;
+      animation: pulse 1s infinite;
+    }
+    .c3 {
+      animation-delay: .2s;
+    }
+  }
+}
