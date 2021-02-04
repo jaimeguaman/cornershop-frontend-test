@@ -1,5 +1,4 @@
 @import 'styles/utils.scss';
-@import 'styles/ui/buttons.scss';
 
 .landing-page {
   width: 100%;
@@ -35,7 +34,6 @@
       }
     }
     .cta {
-      @include accent-button;
       text-decoration: none;
     }
   }
