@@ -85,6 +85,12 @@
   }
 }
 
+@mixin accent-secondary-button {
+  @include standard-button;
+  background-color: var(--app-greyscale-color-100);
+  color: var(--app-tint-color);
+}
+
 @mixin circle-button {
   @include flat-button;
   align-items: center;

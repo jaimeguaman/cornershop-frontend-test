@@ -98,6 +98,10 @@ a {
   @include accent-button;
 }
 
+.accent-secondary-button {
+  @include accent-secondary-button;
+}
+
 .standard-form {
   .form-control {
     input[type="text"],
