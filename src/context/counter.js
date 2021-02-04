@@ -23,8 +23,13 @@ function CounterProvider ({children}) {
       dispatch({type: 'REFRESH_TIMES'})
       return CounterService.list()
         .then((data) => {
-          dispatch({type: 'LIST', payload: data})
-          dispatch({type: 'LOADING_END'})
+          return new Promise(resolve => {
+            setTimeout(() => {
+              dispatch({type: 'LIST', payload: data})
+              dispatch({type: 'LOADING_END'})
+              resolve()
+            }, 1000)
+          })
         })
       .catch(counterActionError)
     },
