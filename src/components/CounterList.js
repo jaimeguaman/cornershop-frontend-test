@@ -2,7 +2,11 @@ import { useContext, useCallback, useEffect, useState } from 'react'
 import CounterState, { CounterActions } from 'context/counter'
 import CounterItem from 'components/CounterItem'
 import { getCounter } from 'utils'
+import { ReactComponent as RefreshIcon } from 'assets/refresh-icon.svg'
+
 import 'styles/ui/CounterList.scss'
+
+
 
 function CounterList ({counters}) {
   const actions = useContext(CounterActions)
@@ -34,28 +38,35 @@ function CounterList ({counters}) {
 
   const HelperSelected = () => {
     return (
-      <div>
-        <strong>{selectedCounters} Selected</strong>
-        <button onClick={handleRefreshButton}>Refresh</button>
+      <div className="list-helper -selected">
+        <p>{selectedCounters} Selected</p>
+        <button className="refresh-button" onClick={handleRefreshButton}>
+          <RefreshIcon />
+        </button>
       </div>
     )
   }
 
   const HelperRefresh = () => {
     return (
-      <div>
-        <strong>{state.filteredCounters.length} Items</strong>
-        <span>{state.refreshTimes} Times</span>
-        <button onClick={handleRefreshButton}>Refresh</button>
+      <div className="list-helper -refresh">
+        <p className="items-count">{state.filteredCounters.length} Items</p>
+        <p className="times-count">{state.refreshTimes} Times</p>
+        <button className="refresh-button" onClick={handleRefreshButton}>
+        <RefreshIcon />
+        </button>
       </div>
     )
   }
 
   const HelperRefreshing = () => {
     return (
-      <div>
-        <strong>{state.filteredCounters.length} Items</strong>
-        <span>Refreshing...</span>
+      <div className="list-helper -refreshing">
+        <p className="items-count">{state.filteredCounters.length} Items</p>
+        <p className="refreshing-indicator">
+          <RefreshIcon />
+          Refreshing...
+        </p>
       </div>
     )
   }
