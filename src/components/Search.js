@@ -15,7 +15,7 @@ function Search ({ onChange = () => {}, text}) {
   return (
     <form className={`search-box ${isActive ? "-active" : "-inactive"}`} onSubmit={e => e.preventDefault()}>
       <div className="search-box__inner">
-        <input onFocus={he => setActive(true)} onBlur={e => setActive(false)} placeholder="Search Counters" onChange={handleChange} value={text} type="text"/>
+        <input onFocus={e => setActive(true)} onBlur={e => setActive(false)} placeholder="Search Counters" onChange={handleChange} value={text} type="text"/>
         <button className="standard-button" onClick={handleCancel} type="reset">Cancel</button>
       </div>
     </form>
