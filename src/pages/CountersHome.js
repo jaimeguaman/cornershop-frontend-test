@@ -8,6 +8,8 @@ import FooterActions from 'components/FooterActions'
 import Loading from 'components/Loading'
 import Search from 'components/Search'
 
+import 'styles/pages/CountersHome.scss'
+
 function CountersHome () {
   const actions = useContext(CounterActions)
   const state = useContext(CounterState)
@@ -37,16 +39,16 @@ function CountersHome () {
 
   const CountersEmpty = () => {
     return (
-      <div>
-        <h2>No counters yet</h2>
-        <p>Some random quote</p>
+      <div className="feedback-block">
+        <h2 className="large-title">No counters yet</h2>
+        <p className="secondary-text">When I started counting my blessings, my whole life turned around.” —Willie Nelson</p>
       </div>
     )
   }
 
   const CountersNoResults = () => {
     return (
-      <div>
+      <div className="feedback-block">
         <h2>No results</h2>
       </div>
     )
@@ -55,9 +57,9 @@ function CountersHome () {
   const CountersError = () => {
     const message = navigator.onLine ? 'An error happened while requesting counters' : 'Internet connection appears to be offline'
     return (
-      <div>
-        <h2>Couldn't load the counters</h2>
-        <p>{message}</p>
+      <div className="feedback-block">
+        <h2 className="large-title">Couldn't load the counters</h2>
+        <p className="secondary-text">{message}</p>
         <button disabled={loading} onClick={getCounters}>Retry</button>
       </div>
     )
@@ -72,21 +74,27 @@ function CountersHome () {
   }, [state.counters, state.searchText])
 
   return (
-    <div>
-      <section>
-        <div>
-          <Search onChange={setFilterText} text={state.searchText}/>
-        </div>
-        <div className="list-container">
-          { loading && <Loading/> }
-          { hasCounters ? <CounterList counters={state.filteredCounters}/> : null }
-          { noCounters ? <CountersEmpty/> : null }
-          { !hasFilteredCounters &&   hasCounters ? <CountersNoResults/> : null }
-          { error && <CountersError/>}
+    <div className="counters-home-page-wrapper">
+      <section className="counters-home-page">
+        <div className="viewport-wrapper -full-height">
+          <div className="counters-home-page__inner">
+            <div className="search-container">
+              <Search onChange={setFilterText} text={state.searchText}/>
+            </div>
+            <div className="list-container">
+              { loading && <Loading/> }
+              { hasCounters ? <CounterList counters={state.filteredCounters}/> : null }
+              { noCounters ? <CountersEmpty/> : null }
+              { !hasFilteredCounters &&   hasCounters ? <CountersNoResults/> : null }
+              { error && <CountersError/>}
+            </div>
+          </div>
         </div>
       </section>
       <FooterActions>
-        <Link to={createCounterRoutePath}>+</Link>
+        <div className="to-right">
+          <Link className="accent-button create-counter-button" to={createCounterRoutePath}>+</Link>
+        </div>
       </FooterActions>
       <Switch>
         <Route path={createCounterRoutePath}>

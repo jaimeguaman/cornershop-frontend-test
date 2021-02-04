@@ -1,0 +1,29 @@
+.large-title {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 30px;
+  text-align: center;
+  color: var(--app-greyscale-color-800);
+  margin: 20px 0;
+}
+
+.secondary-text {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 17px;
+  line-height: 23px;
+  text-align: center;
+  color: var(--app-greyscale-color-600);
+  margin: 0 0 20px 0;
+}
+
+.normal-text {
+  font-family: Avenir Next;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 17px;
+  line-height: 23px;
+  letter-spacing: 0.02em;
+  color: var(  --app-greyscale-color-700);
+}

@@ -1,0 +1,31 @@
+@import 'styles/utils.scss';
+@import 'styles/ui/buttons.scss';
+
+.counters-home-page {
+  width: 100%;
+  &__inner {
+    @include fit-viewport-height;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 16px 0;
+    padding-bottom: 75px;
+    .search-container{
+      width: 100%;
+    }
+    .list-container {
+      margin: auto;
+    }
+  }
+}
+
+.counters-home-page-wrapper {
+  .footer-actions {
+    .to-right {
+      display: flex;
+      margin: auto;
+      margin-right: 0;
+    }
+  }
+}

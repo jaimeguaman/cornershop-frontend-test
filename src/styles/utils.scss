@@ -1,0 +1,66 @@
+@mixin pseudomask {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+@mixin fit-viewport-height {
+  height: auto;
+  min-height: 100%;
+  min-height: 100vh;
+}
+
+/***************************************
+  Responsive Helper
+  Usage:
+
+  .my-box {
+    padding: 10px;
+    @include for-size(fullhd-up) {
+      padding: 80px;
+    }
+    @include for-size(desktop-up) {
+      padding: 20px;
+    }
+    @include for-size(tablet-landscape-up) {
+      padding: 80px;
+    }
+  }
+**************************************/
+$phone-upper-boundary: 670px !default;
+$tablet-portrait-upper-boundary: 900px !default;
+$tablet-landscape-upper-boundary: 1024px !default;
+$desktop-upper-boundary: 1280px !default;
+$fullhd-upper-boundary: 1920px !default;
+
+@mixin for-size($range) {
+  @if $range == phone-only {
+    @media (max-width: #{$phone-upper-boundary - 1}) { @content; }
+  } @else if $range == phone-only-landscape {
+    @media (max-width: #{$phone-upper-boundary - 1}) and (orientation: landscape) { @content; }
+  } @else if $range == tablet-portrait-up {
+    @media (min-width: $phone-upper-boundary) { @content; }
+  } @else if $range == tablet-landscape-up {
+    @media (min-width: $tablet-portrait-upper-boundary) { @content; }
+  } @else if $range == old-desktop-only {
+    @media (min-width: $tablet-landscape-upper-boundary) and (max-width: #{$desktop-upper-boundary - 1}) { @content; }
+  } @else if $range == desktop-up {
+    @media (min-width: $desktop-upper-boundary) { @content; }
+  } @else if $range == fullhd-up {
+    @media (min-width: $fullhd-upper-boundary) { @content; }
+  }
+}
+
+/*
+.my-box {
+  padding: 10px;
+
+  @include for-size(desktop-up) {
+    padding: 20px;
+  }
+}
+*/

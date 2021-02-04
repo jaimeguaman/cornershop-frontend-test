@@ -1,0 +1,48 @@
+@import 'styles/ui/form.scss';
+
+$widget-height: 48px;
+$button-width: 90px;
+
+.search-box {
+  width: 100%;
+  max-width: 374px;
+  margin: 0 auto;
+  &.-inactive {
+    input {
+      &::placeholder {
+        color: rgba(black, .5);
+      }
+      & + button {
+        display: none;
+      }
+    }
+  }
+  &.-active {
+    input {
+      & + button {
+        display: block;
+      }
+    }
+  }
+  &__inner {
+    display: flex;
+    flex-wrap: wrap;
+    input {
+      @include standard-input;
+      border: 2px solid rgba(0, 0, 0, 0.02);
+      box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
+      width: 100%;
+      height: $widget-height;
+      &:focus {
+        width: calc(100% - 105px);
+      }
+    }
+
+    button {
+      height: $widget-height;
+      display: none;
+      width: $button-width;
+      margin-left: 12px;
+    }
+  }
+}

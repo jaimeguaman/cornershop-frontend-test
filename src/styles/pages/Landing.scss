@@ -1,0 +1,42 @@
+@import 'styles/utils.scss';
+@import 'styles/ui/buttons.scss';
+
+.landing-page {
+  width: 100%;
+  background-color: var(--app-greyscale-color-300);
+  &__inner {
+    @include fit-viewport-height;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 40px;
+    @include for-size(desktop-up) {
+      padding: 0 40px;
+    }
+    @include for-size(phone-only-landscape) {
+      padding:0 120px;
+    }
+    svg {
+      width: 178px;
+      margin-bottom: 20px;
+      @include for-size(phone-only-landscape) {
+        width: 140px;
+        margin-bottom: 0;
+      }
+    }
+    .secondary-text {
+      margin: 0 0 60px 0;
+      @include for-size(phone-only-landscape) {
+        margin-bottom: 0;
+      }
+      @include for-size(tablet-portrait-up) {
+        padding: 0 100px;
+      }
+    }
+    .cta {
+      @include accent-button;
+      text-decoration: none;
+    }
+  }
+}

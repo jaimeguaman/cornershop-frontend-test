@@ -1,0 +1,23 @@
+@mixin standard-input {
+  background-color: var(--app-greyscale-color-100);
+  border: 2px solid rgba(black, .15);
+  box-shadow: inset 0px 2px 8px rgba(black, .05);
+  border-radius: 8px;
+  color: var(--app-greyscale-color-800);
+  padding: 10px;
+  will-change: border-color;
+  transition: .2s ease-in-out border-color;
+  &::placeholder {
+    color: rgba(black, .5);
+  }
+
+
+  &:focus {
+    outline: none;
+    border-color: var(--app-tint-color);
+    box-shadow: 0 0 0;
+    &::placeholder {
+      color: rgba(black, .7);
+    }
+  }
+}

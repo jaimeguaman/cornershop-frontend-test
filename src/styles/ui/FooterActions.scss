@@ -1,0 +1,23 @@
+@import 'styles/utils.scss';
+
+.footer-actions {
+  @include for-size(desktop-up) {
+    border-top : 2px solid rgba(black, .1);
+  }
+  bottom: 0;
+  height: 75px;
+  left: 0;
+  padding: 0 16px;
+  position: fixed;
+  width: 100%;
+  z-index: 2;
+  &__inner {
+    border-top : 2px solid rgba(black, .1);
+    @include for-size(desktop-up) {
+      border-top: none;
+    }
+    display: flex;
+    flex-wrap: wrap;
+    padding: 16px 0;
+  }
+}

@@ -9,6 +9,7 @@ import {
 import Landing from 'pages/Landing'
 import CountersHome from 'pages/CountersHome'
 import { CounterProvider } from 'context/counter'
+import 'styles/app.scss'
 
 const App = () => {
   return (

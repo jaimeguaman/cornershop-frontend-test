@@ -1,0 +1,95 @@
+@import-normalize;
+
+@import 'styles/utils.scss';
+@import 'styles/ui/buttons.scss';
+@import 'styles/ui/typography.scss';
+
+:root {
+  --font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  --app-tint-color: #FF9500;
+  --app-destructive-color: #ff404c;
+
+  --app-greyscale-color-100: #fff;
+  --app-greyscale-color-200: #FBFBFB;
+  --app-greyscale-color-300: #E5E5E5;
+  --app-greyscale-color-400: #dcdcdf;
+  --app-greyscale-color-500: #888b90;
+  --app-greyscale-color-600: #4A4A4A;
+  --app-greyscale-color-700: #212121;
+  --app-greyscale-color-800: #000;
+
+  --app-view-padding-horizontal-mobile: 10px;
+  --app-view-padding-vertical-mobile: 20px;
+
+  --app-view-padding-horizontal-tablet: 20px;
+  --app-view-padding-vertical-tablet: 20px;
+
+  --app-view-padding-horizontal-desktop: 50px;
+  --app-view-padding-vertical-desktop: 30px;
+
+  --app-max-width: 570px;
+  --app-text-color: --app-greyscale-color-700;
+}
+
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+html,
+body,
+#root {
+  @include fit-viewport-height;
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  font-size: 17px;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--app-greyscale-color-100);
+}
+
+a {
+  color: var(--app-greyscale-color-500);
+  font-weight: 500;
+  &:hover {
+    color: var(--app-greyscale-color-700)
+  }
+}
+
+.viewport-wrapper {
+  &.-full-height {
+    @include fit-viewport-height;
+  }
+  @include for-size(phone-only) {
+    width: 100%;
+    padding-left: var(--app-view-padding-horizontal-mobile);
+    padding-right: var(--app-view-padding-horizontal-mobile);
+  }
+
+  @include for-size(tablet-portrait-up) {
+    width: 100%;
+    padding-left: var(--app-view-padding-horizontal-tablet);
+    padding-right: var(--app-view-padding-horizontal-tablet);
+    max-width: var(--app-max-width);
+    margin: 0 auto;
+    padding-left: 0;
+    padding-right: 0
+  }
+}
+
+// global style to avoid generate extra styles for standarized buttons
+.standard-button {
+  @include standard-button;
+}
+
+.accent-button {
+  @include accent-button;
+}
+
