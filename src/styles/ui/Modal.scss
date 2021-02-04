@@ -1,4 +1,5 @@
 @import 'styles/utils.scss';
+@import 'styles/ui/buttons.scss';
 
 .app-modal {
   .mask {
@@ -15,20 +16,64 @@
   .modal-wrapper {
     display: table-cell;
     vertical-align: middle;
+    padding: 15px 0 0 0;
+    @include for-size(tablet-portrait-up) {
+      padding: 45px 0;
+      .viewport-wrapper {
+        height: 100%;
+        min-height: 100%;
+      }
+    }
   }
   .modal-container {
     margin: 0px auto;
     background-color: var(--app-greyscale-color-100);
-    border-radius: 2px;
+    border-radius: 16px 16px 0 0;
     box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
     transition: all .3s ease;
     position: relative;
-    @include for-size(phone-only){
-      width: 98% !important;
-      margin: 0 auto;
+    width: 100%;
+    height: 100vh;
+    @include for-size(tablet-portrait-up) {
+      height: 100%;
+      border-radius: 16px;
     }
+
     &.modal-flat{
       padding: 0;
+    }
+
+    .modal-header {
+      padding: 15px;
+      display: flex;
+      width: 100%;
+      border-bottom: 2px solid rgba(black, .1);
+      align-items: center;
+      .large-title {
+        margin: 0;
+      }
+      .close-modal-button {
+        @include circle-button;
+        width: 28px;
+        height: 28px;
+        margin-right: 15px;
+      }
+      .header-actions {
+        display: flex;
+        flex-wrap: wrap;
+        margin-left: auto;
+      }
+    }
+
+    .modal-body {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      margin: auto;
+      padding: 15px;
+      @include for-size(tablet-portrait-up) {
+        height: auto;
+      }
     }
   }
 }
