@@ -75,11 +75,13 @@
   color: var(--app-greyscale-color-100);
   @include for-size(desktop-up) {
     &:hover {
+      color: var(--app-greyscale-color-100);
       background-color: lighten($app-tint-color, 5%);
     }
-    &:focus {
-      background-color: darken($app-tint-color, 5%);
-    }
+  }
+  &:focus {
+    color: var(--app-greyscale-color-100);
+    background-color: darken($app-tint-color, 5%);
   }
 }
 
