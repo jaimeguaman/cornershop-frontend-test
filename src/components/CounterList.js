@@ -95,7 +95,7 @@ function CounterList ({counters}) {
   return (
     <div className="counter-list">
       <div className="list-helper-container">
-        <ListHelper />
+        {counters.length > 0 && <ListHelper />}
       </div>
       <ul className="counter-items">
         {counters.map((counter) => (

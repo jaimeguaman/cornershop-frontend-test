@@ -1,5 +1,5 @@
 
-import { useEffect, useContext } from 'react'
+import { useEffect, useContext, useState } from 'react'
 import { Switch, Route, useRouteMatch, Link } from "react-router-dom";
 import CounterState, { CounterActions } from 'context/counter'
 import CountersCreate from 'pages/CountersCreate'
@@ -14,18 +14,24 @@ import 'styles/pages/CountersHome.scss'
 function CountersHome () {
   const actions = useContext(CounterActions)
   const state = useContext(CounterState)
+  const [shouldShouldLoading, setShouldShowLoading] = useState(true)
   const { path } = useRouteMatch();
 
   //component state
   const createCounterRoutePath = `${path}add/`
   const loading = state.loading && !state.error
-  const hasCounters = state.counters?.length && !state.error && !state.loading
+  const hasCounters = state.counters?.length && !state.error && (!state.loading || !shouldShouldLoading)
   const hasFilteredCounters = state.filteredCounters?.length && !state.error && !state.loading
   const error = state.error && !state.loading
   const noCounters = !hasCounters && !state.loading && !error
+  const autoAlignLayout = (loading && shouldShouldLoading) || (!hasFilteredCounters && hasCounters && !loading) || noCounters || error
 
-  const getCounters = () => {
-    actions.list()
+  const getCounters = (showLoading) => {
+    setShouldShowLoading(showLoading)
+    return actions.list()
+            .then(() => {
+              setShouldShowLoading(false)
+            })
   }
 
   const filterCounters = (text) => {
@@ -56,7 +62,7 @@ function CountersHome () {
   const CountersNoResults = () => {
     return (
       <div className="feedback-block">
-        <h2>No results</h2>
+        <h2 className="feedback-text">No results</h2>
       </div>
     )
   }
@@ -67,13 +73,13 @@ function CountersHome () {
       <div className="feedback-block">
         <h2 className="large-title">Couldn't load the counters</h2>
         <p className="secondary-text">{message}</p>
-        <button disabled={loading} onClick={getCounters}>Retry</button>
+        <button className="accent-secondary-button" disabled={loading} onClick={() => getCounters(true) }>Retry</button>
       </div>
     )
   }
 
   useEffect(() => {
-    getCounters()
+    getCounters(true)
   }, [])
 
   useEffect(() => {
@@ -88,11 +94,11 @@ function CountersHome () {
             <div className="search-container">
               <Search onChange={setFilterText} text={state.searchText}/>
             </div>
-            <div className={`list-container ${noCounters ? '-auto-align' : ''}`}>
-              { loading && <Loading/> }
+            <div className={`list-container ${ autoAlignLayout ? '-auto-align' : ''}`}>
+              { loading && shouldShouldLoading && <Loading/> }
               { hasCounters ? <CounterList counters={state.filteredCounters}/> : null }
               { noCounters ? <CountersEmpty/> : null }
-              { !hasFilteredCounters &&   hasCounters ? <CountersNoResults/> : null }
+              { !hasFilteredCounters && hasCounters && !loading ? <CountersNoResults/> : null }
               { error && <CountersError/>}
             </div>
           </div>
