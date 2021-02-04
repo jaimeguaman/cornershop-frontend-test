@@ -30,7 +30,7 @@ function CountersHome () {
 
   const filterCounters = (text) => {
     actions.filteredList(
-      state.counters.filter(counter => !text ? true : counter.title.includes(text))
+      state.counters.filter(counter => !text ? true : counter.title.toLowerCase().includes(text.toLowerCase()))
     )
   }
 
@@ -88,7 +88,7 @@ function CountersHome () {
             <div className="search-container">
               <Search onChange={setFilterText} text={state.searchText}/>
             </div>
-            <div className="list-container">
+            <div className={`list-container ${noCounters ? '-auto-align' : ''}`}>
               { loading && <Loading/> }
               { hasCounters ? <CounterList counters={state.filteredCounters}/> : null }
               { noCounters ? <CountersEmpty/> : null }
