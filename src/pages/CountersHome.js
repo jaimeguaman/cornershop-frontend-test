@@ -7,6 +7,7 @@ import CounterList from 'components/CounterList'
 import FooterActions from 'components/FooterActions'
 import Loading from 'components/Loading'
 import Search from 'components/Search'
+import { ReactComponent as PlusIcon } from 'assets/plus-icon.svg'
 
 import 'styles/pages/CountersHome.scss'
 
@@ -93,7 +94,9 @@ function CountersHome () {
       </section>
       <FooterActions>
         <div className="to-right">
-          <Link className="accent-button create-counter-button" to={createCounterRoutePath}>+</Link>
+          <Link className="accent-button create-counter-button" to={createCounterRoutePath}>
+            <PlusIcon/>
+          </Link>
         </div>
       </FooterActions>
       <Switch>

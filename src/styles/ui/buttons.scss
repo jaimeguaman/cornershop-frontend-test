@@ -7,7 +7,7 @@
   border-radius: 8px;
   color: var(--app-greyscale-color-600);
   cursor: pointer;
-  display: block;
+  display: flex;
   font-weight: 600;
   padding: 10px 18px;
   transform: translateZ(0);
@@ -64,6 +64,15 @@
   @include standard-button;
   background-color: var(--app-tint-color);
   color: var(--app-greyscale-color-100);
+  @include for-size(desktop-up) {
+    &:hover {
+      background-color: lighten($app-tint-color, 5%);
+    }
+    &:focus {
+      background-color: darken($app-tint-color, 5%);
+    }
+  }
+
 }
 
 /* @mixin primary-button {
