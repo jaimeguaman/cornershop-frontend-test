@@ -22,7 +22,10 @@
       }
       .feedback-block {
         text-align: center;
-        padding: 0 30px;
+        padding: 0 20px;
+        @include for-size(tablet-portrait-up) {
+          padding:0 70px;
+        }
         .feedback-text {
           font-style: normal;
           font-weight: 500;
