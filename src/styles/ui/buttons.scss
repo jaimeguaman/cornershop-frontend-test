@@ -2,6 +2,7 @@
 
 @mixin standard-button {
   backface-visibility: hidden;
+  align-items: center;
   background-color: var(--app-greyscale-color-200);
   border: 1px solid rgba(0,0,0, .1);
   border-radius: 8px;
@@ -46,11 +47,21 @@
   width: 100%;
 }
 
+@mixin destructive-button {
+  color: var(--app-destructive-color);
+  svg {
+    path,
+    rect {
+      fill: var(--app-destructive-color);
+    }
+  }
+}
+
 @mixin flat-button {
   background-color: transparent;
   border: none;
   &:focus {
-    outline: none; // make sure yo provide an alternative style
+    outline: none; // make sure you provide an alternative style
   }
 }
 
@@ -106,39 +117,3 @@
     }
   }
 }
-
-
-/* @mixin primary-button {
-  @include standard-button;
-  background-color: $brand-palette-400;
-  color: $palette-light-600;
-  &:hover{
-    background-color: darken(red, 10%);
-  }
-}
-
-@mixin secondary-button {
-  @include standard-button;
-  background-color: transparent;
-  color: $palette-dark-400;
-  &:hover{
-    background-color: darken($brand-palette-400, 10%);
-    color: $palette-light-600;
-  }
-}
-
-@mixin as-link-button {
-  @include standard-button;
-  background-color: transparent;
-  color: $body-font-color;
-  border: none;
-  cursor: pointer;
-  border-bottom:1px solid transparent;
-  text-align: center;
-  text-transform: none;
-  font-weight: bold;
-  &:hover {
-    text-decoration: underline;
-  }
-}
- */

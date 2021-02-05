@@ -31,7 +31,7 @@ export default {
     if (!id) {
       return Promise.reject('No id')
     }
-    return CounterService.delete('/', { id })
+    return CounterService.delete('/',  { data: { id } })
             .then(getResponseData, handleErrorResponse)
   },
   increment (id) {

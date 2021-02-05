@@ -102,6 +102,10 @@ a {
   @include accent-secondary-button;
 }
 
+.destructive-button {
+  @include destructive-button;
+}
+
 .standard-form {
   .form-control {
     &.-inactive {

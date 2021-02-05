@@ -44,7 +44,7 @@
 
       .counter-items {
         overflow-y: scroll;
-        max-height: calc(100vh - 200px);
+        max-height: calc(100vh - 190px);
       }
     }
   }
@@ -52,10 +52,24 @@
 
 .counters-home-page-wrapper {
   .footer-actions {
-    .to-right {
+    .to-right,
+    .to-left {
       display: flex;
       margin: auto;
+      button {
+        &:not(:last-child) {
+          margin-right: 15px;
+        }
+      }
+      a {
+        height: 44px;
+      }
+    }
+    .to-right {
       margin-right: 0;
+    }
+    .to-left {
+      margin-left: 0;
     }
   }
 }
