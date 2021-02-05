@@ -71,7 +71,7 @@ const ModalBody = ({ state }) => {
         <label htmlFor="new-counter-title-input">Name</label>
         <input
           onKeyDown={handleInputChange}
-          maxLength="50"
+          maxLength="150"
           placeholder="Cups of coffee"
           id="new-counter-title-input"
           ref={state.titleRef}
