@@ -29,7 +29,7 @@ function Search ({ onChange = () => {}, text}) {
           onChange={handleChange}
           value={text}
           type="text" />
-        <button className="standard-button" onClick={handleCancel} type="reset">Cancel</button>
+        <button className="standard-button" type="button">Cancel</button>
       </div>
     </form>
   )
