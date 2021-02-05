@@ -19,7 +19,7 @@ function Search ({ onChange = () => {}, text}) {
       className={`search-box ${isActive ? "-active" : "-inactive"}`}
       onSubmit={e => e.preventDefault()} >
       <div className="search-box__inner">
-        <i class="input-icon">
+        <i className="input-icon">
           <SearchIcon />
         </i>
         <input
