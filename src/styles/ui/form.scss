@@ -12,7 +12,6 @@
     color: rgba(black, .5);
   }
 
-
   &:focus {
     outline: none;
     border-color: var(--app-tint-color);
@@ -21,6 +20,16 @@
       color: rgba(black, .7);
     }
   }
+}
+
+@mixin with-icon-input {
+  padding-left: 50px;
+}
+
+@mixin icon-input {
+  position: absolute;
+  top: 14px;
+  left: 20px;
 }
 
 @mixin standard-label {
