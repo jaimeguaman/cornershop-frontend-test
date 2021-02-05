@@ -38,7 +38,7 @@
     }
   }
 **************************************/
-$phone-upper-boundary: 670px !default;
+$phone-upper-boundary: 500px !default;
 $tablet-portrait-upper-boundary: 900px !default;
 $tablet-landscape-upper-boundary: 1024px !default;
 $desktop-upper-boundary: 1280px !default;
@@ -48,7 +48,7 @@ $fullhd-upper-boundary: 1920px !default;
   @if $range == phone-only {
     @media (max-width: #{$phone-upper-boundary - 1}) { @content; }
   } @else if $range == phone-only-landscape {
-    @media (max-width: #{$phone-upper-boundary - 1}) and (orientation: landscape) { @content; }
+    @media (max-width: #{$phone-upper-boundary + 200}) and (orientation: landscape) { @content; }
   } @else if $range == tablet-portrait-up {
     @media (min-width: $phone-upper-boundary) { @content; }
   } @else if $range == tablet-landscape-up {
