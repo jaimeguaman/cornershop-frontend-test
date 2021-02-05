@@ -1,0 +1,21 @@
+@import 'styles/utils';
+
+.message-box {
+  .modal-container {
+    @include for-size(phone-only) {
+      width: 100% !important;
+    }
+    @include for-size(phone-only-landscape) {
+      width: 90% !important;
+    }
+  }
+  .message-box-controls {
+    display: flex;
+    justify-content: center;
+    button {
+      &:not(:last-child) {
+        margin-right: 15px;
+      }
+    }
+  }
+}
