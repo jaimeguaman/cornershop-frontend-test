@@ -10,7 +10,6 @@ function CounterProvider ({children}) {
   const [state, dispatch] = useReducer(counterReducer, initialState)
 
   const counterActionError = (data) => {
-    dispatch({type: 'LOADING_END'})
     dispatch({type: 'ERROR', payload: true})
     return Promise.reject(data)
   }
@@ -20,15 +19,12 @@ function CounterProvider ({children}) {
       dispatch({type: 'FILTERED_LIST', payload: data})
     },
     list() {
-      dispatch({type: 'ERROR', payload: false})
       dispatch({type: 'LOADING_START'})
-      dispatch({type: 'REFRESH_TIMES'})
       return CounterService.list()
         .then((data) => {
           return new Promise(resolve => {
             setTimeout(() => {
               dispatch({type: 'LIST', payload: data})
-              dispatch({type: 'LOADING_END'})
               resolve()
             }, 1000)
           })
@@ -36,7 +32,6 @@ function CounterProvider ({children}) {
       .catch(counterActionError)
     },
     increment(id) {
-      dispatch({type: 'ERROR', payload: false})
       dispatch({type: 'INCREMENT', payload: id})
       return CounterService.increment(id)
         .then(() => { }, () => {
@@ -45,7 +40,6 @@ function CounterProvider ({children}) {
       .catch(counterActionError)
     },
     decrement(id) {
-      dispatch({type: 'ERROR', payload: false})
       dispatch({type: 'DECREMENT', payload: id})
       return CounterService.decrement(id)
         .then(() => {}, () => {
@@ -53,14 +47,12 @@ function CounterProvider ({children}) {
         })
     },
     add (title) {
-      dispatch({type: 'ERROR', payload: false})
       dispatch({type: 'LOADING_START'})
       return CounterService.add(title)
         .then((counter) => {
           return new Promise(resolve => {
             setTimeout(() => {
               dispatch({type: 'ADD', payload: counter})
-              dispatch({type: 'LOADING_END'})
               resolve()
             }, 100)
           })
@@ -68,14 +60,12 @@ function CounterProvider ({children}) {
       .catch(counterActionError)
     },
     remove (id) {
-      dispatch({type: 'ERROR', payload: false})
       dispatch({type: 'LOADING_START'})
-      return CounterService.remove(title)
+      return CounterService.remove(id)
         .then(() => {
           dispatch({type: 'REMOVE', payload: id})
-          dispatch({type: 'LOADING_END'})
         })
-      .catch(counterActionError)
+        .catch(counterActionError)
     },
     toggleSelect (id) {
       dispatch({type: 'TOGGLE_SELECTED', payload: id})
