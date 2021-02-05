@@ -12,7 +12,6 @@ function getResponseData (response) {
 function handleErrorResponse (exception) {
   const response = exception.response
   const message = response ? `${response.status} - ${response.statusText}` : 'Server error'
-
   return Promise.reject(message)
 }
 

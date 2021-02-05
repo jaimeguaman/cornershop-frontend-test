@@ -1,0 +1,14 @@
+@import 'styles/utils.scss';
+@import 'styles/ui/buttons.scss';
+
+.counters-create-page {
+  width: 100%;
+  .loading-container {
+    padding: 80px 40px;
+  }
+  .error-message-block {
+    button {
+      margin: 0 auto;
+    }
+  }
+}

@@ -17,6 +17,12 @@
     display: table-cell;
     vertical-align: middle;
     padding: 15px 0 0 0;
+    &.-spaced  {
+      padding: 15px 20px;
+      @include for-size(tablet-portrait-up) {
+        padding-top: 15%;
+      }
+    }
     @include for-size(tablet-portrait-up) {
       padding: 45px 0;
       .viewport-wrapper {
@@ -34,6 +40,10 @@
     position: relative;
     width: 100%;
     height: 100vh;
+    &.-preserve-height {
+      height: auto;
+      border-radius: 8px;
+    }
     @include for-size(tablet-portrait-up) {
       height: 100%;
       border-radius: 16px;
