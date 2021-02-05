@@ -1,13 +1,16 @@
 
 import { useEffect, useContext, useState, useCallback } from 'react'
-import { Switch, Route, useRouteMatch, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 import CounterState, { CounterActions } from 'context/counter'
-import CountersCreate from 'pages/CountersCreate'
 import CounterList from 'components/CounterList'
 import FooterActions from 'components/FooterActions'
 import Loading from 'components/Loading'
 import Search from 'components/Search'
 import CounterRemove from 'components/CounterRemove'
+import CountersError from 'components/CountersError'
+import CountersEmpty from 'components/CountersEmpty'
+import CountersNoResults from 'components/CountersNoResults'
 
 import { ReactComponent as PlusIcon } from 'assets/plus-icon.svg'
 import { ReactComponent as TrashIcon } from 'assets/trash-icon.svg'
@@ -15,51 +18,14 @@ import { ReactComponent as ShareIcon } from 'assets/share-icon.svg'
 
 import 'styles/pages/CountersHome.scss'
 
-
-const CountersNoResults = () => {
-  return (
-    <div className="feedback-block">
-      <h2 className="feedback-text">No results</h2>
-    </div>
-  )
-}
-
-const CountersEmpty = () => {
-  return (
-    <div className="feedback-block">
-      <h2 className="large-title">No counters yet</h2>
-      <p className="secondary-text">
-      <q>
-        When I started counting my blessings, my whole life turned around.”
-        <br/>
-        —Willie Nelson
-      </q>
-      </p>
-    </div>
-  )
-}
-
-const CountersError = ({ state }) => {
-  const message = navigator.onLine ? 'An error happened while requesting counters' : 'Internet connection appears to be offline'
-  return (
-    <div className="feedback-block">
-      <h2 className="large-title">Couldn't load the counters</h2>
-      <p className="secondary-text">{message}</p>
-      <button className="accent-secondary-button" disabled={state.loading} onClick={() => state.getCounters(true) }>Retry</button>
-    </div>
-  )
-}
-
 function CountersHome () {
   const actions = useContext(CounterActions)
   const state = useContext(CounterState)
   const [shouldShowLoading, setShouldShowLoading] = useState(true)
   const [isRemoving, setRemoving] = useState(false)
   const [isSearching, setIsSearching] = useState(false)
-
-  const { path } = useRouteMatch();
   const selectedCounters = state.counters?.filter(c => c.selected)
-  const createCounterRoutePath = `${path}add/`
+
   //component state
   const loading = state.loading && !state.error
   const hasCounters = state.counters?.length && !state.error && (!state.loading || !shouldShowLoading)
@@ -106,7 +72,6 @@ function CountersHome () {
     filterCounters(state.searchText)
   }, [state.counters, state.searchText])
 
-
   return (
     <div className="counters-home-page-wrapper">
       <section className="counters-home-page">
@@ -117,16 +82,20 @@ function CountersHome () {
             </div>
             <div className={`list-container ${ autoAlignLayout ? '-auto-align' : ''}`}>
               { loading && shouldShowLoading && <Loading/> }
-              { hasCounters ? <CounterList counters={state.filteredCounters}/> : null }
-              { noCounters ? <CountersEmpty/> : null }
-              { noResults ? <CountersNoResults/> : null }
-              { error && <CountersError state={state.loading, getCounters}/>}
+              { hasCounters && <CounterList counters={state.filteredCounters}/> }
+              { noCounters && <CountersEmpty/> }
+              { noResults && <CountersNoResults/> }
+              { error && <CountersError state={{loading: state.loading, getCounters}}/> }
             </div>
           </div>
         </div>
       </section>
       <FooterActions>
-        {isRemoving && atLeastOneSelected && <CounterRemove onRemoved={() => setRemoving(false)} onError={() => setRemoving(false)} />}
+        {isRemoving && atLeastOneSelected &&
+          <CounterRemove
+            onRemoved={() => setRemoving(false)}
+            onError={() => setRemoving(false)} />
+        }
         <div className="to-left">
           {justOneSelected && <button className="standard-button" onClick={handleRemoveIntent}>
             <TrashIcon />
@@ -136,16 +105,11 @@ function CountersHome () {
           </button>}
         </div>
         <div className="to-right">
-          <Link className="accent-button create-counter-button" to={createCounterRoutePath}>
+          <Link className="accent-button create-counter-button" to="/counters/add/">
             <PlusIcon/>
           </Link>
         </div>
       </FooterActions>
-      <Switch>
-        <Route path={createCounterRoutePath}>
-          <CountersCreate/>
-        </Route>
-      </Switch>
     </div>
   )
 }

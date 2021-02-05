@@ -1,7 +1,6 @@
 
 
-import React, { useContext, useCallback, useEffect } from 'react'
-import { useHistory } from "react-router-dom";
+import React, { useContext, useCallback } from 'react'
 import CounterState, { CounterActions } from 'context/counter'
 import MessageBox from 'components/MessageBox'
 

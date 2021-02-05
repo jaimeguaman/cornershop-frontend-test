@@ -8,23 +8,29 @@ import {
 
 import Landing from 'pages/Landing'
 import CountersHome from 'pages/CountersHome'
+import CountersCreate from 'pages/CountersCreate'
 import { CounterProvider } from 'context/counter'
 import 'styles/app.scss'
 
 const App = () => {
   return (
-    <CounterProvider>
       <Router>
           <Switch>
             <Route path="/counters/">
-              <CountersHome />
+              <CounterProvider>
+                <CountersHome />
+                <Switch>
+                  <Route path="/counters/add/">
+                    <CountersCreate/>
+                  </Route>
+                </Switch>
+              </CounterProvider>
             </Route>
             <Route path="/">
               <Landing />
             </Route>
           </Switch>
       </Router>
-    </CounterProvider>
   );
 };
 
