@@ -16,7 +16,6 @@
     background-color: rgba($app-tint-color, .2);
   }
   .counter-title {
-    @include collapsable-text;
     color: var(--app-greyscale-color-700);
     font-style: normal;
     font-weight: normal;

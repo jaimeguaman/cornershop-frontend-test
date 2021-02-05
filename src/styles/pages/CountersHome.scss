@@ -4,7 +4,8 @@
 .counters-home-page {
   width: 100%;
   &__inner {
-    @include fit-viewport-height;
+    height: 100vh;
+    overflow: hidden;
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -39,6 +40,11 @@
         button {
           margin: 0 auto;
         }
+      }
+
+      .counter-items {
+        overflow-y: scroll;
+        max-height: calc(100vh - 200px);
       }
     }
   }
