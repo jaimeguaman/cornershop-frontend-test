@@ -3,12 +3,8 @@
 const CounterActions = (dispatch, service) => {
 
   const counterActionError = (data) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        dispatch({type: 'ERROR', payload: true})
-        reject(data)
-      }, 1000)
-    })
+    dispatch({type: 'ERROR', payload: true})
+    return Promise.reject()
   }
 
   return {
@@ -19,12 +15,7 @@ const CounterActions = (dispatch, service) => {
       dispatch({type: 'LOADING_START'})
       return service.list()
         .then((data) => {
-          return new Promise(resolve => {
-            setTimeout(() => {
-              dispatch({type: 'LIST', payload: data})
-              resolve()
-            }, 1000)
-          })
+          dispatch({type: 'LIST', payload: data})
         })
       .catch(counterActionError)
     },
@@ -47,12 +38,7 @@ const CounterActions = (dispatch, service) => {
       dispatch({type: 'LOADING_START'})
       return service.add(title)
         .then((counter) => {
-          return new Promise(resolve => {
-            setTimeout(() => {
-              dispatch({type: 'ADD', payload: counter})
-              resolve()
-            }, 100)
-          })
+          dispatch({type: 'ADD', payload: counter})
         })
       .catch(counterActionError)
     },
@@ -60,12 +46,7 @@ const CounterActions = (dispatch, service) => {
       dispatch({type: 'LOADING_START'})
       return service.remove(id)
         .then(() => {
-          return new Promise(resolve => {
-            setTimeout(() => {
-              dispatch({type: 'REMOVE', payload: id})
-              resolve()
-            }, 1000)
-          })
+          dispatch({type: 'REMOVE', payload: id})
         })
         .catch(counterActionError)
     },

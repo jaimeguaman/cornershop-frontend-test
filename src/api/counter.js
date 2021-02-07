@@ -6,13 +6,21 @@ const CounterService = axios.create({
 })
 
 function getResponseData (response) {
-  return typeof response.data !== 'undefined' ? response.data : response
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(typeof response.data !== 'undefined' ? response.data : response)
+    }, 1000)
+  })
 }
 
 function handleErrorResponse (exception) {
   const response = exception.response
   const message = response ? `${response.status} - ${response.statusText}` : 'Server error'
-  return Promise.reject(message)
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      reject(message)
+    }, 1000)
+  })
 }
 
 export default {
