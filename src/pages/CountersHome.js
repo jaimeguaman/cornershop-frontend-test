@@ -81,11 +81,11 @@ function CountersHome () {
               <Search onChange={setFilterText} text={state.searchText}/>
             </div>
             <div className={`list-container ${ autoAlignLayout ? '-auto-align' : ''}`}>
-              { loading && shouldShowLoading && <Loading/> }
-              { hasCounters && <CounterList counters={state.filteredCounters}/> }
-              { noCounters && <CountersEmpty/> }
-              { noResults && <CountersNoResults/> }
-              { error && <CountersError state={{loading: state.loading, getCounters}}/> }
+              { loading && shouldShowLoading ? <Loading/> : null}
+              { hasCounters ? <CounterList counters={state.filteredCounters} isRefreshing={state.loading} refreshTimes={state.refreshTimes} /> : null}
+              { noCounters ? <CountersEmpty/> : null}
+              { noResults ? <CountersNoResults/> : null }
+              { error ? <CountersError state={{loading: state.loading, getCounters}}/> : null }
             </div>
           </div>
         </div>

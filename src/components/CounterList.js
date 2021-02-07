@@ -1,5 +1,5 @@
 import { useContext, useCallback, useEffect, useState } from 'react'
-import CounterState, { CounterActions } from 'context/counter'
+import { CounterActions } from 'context/counter'
 import CounterItem from 'components/CounterItem'
 import { getCounter } from 'utils'
 import { ReactComponent as RefreshIcon } from 'assets/refresh-icon.svg'
@@ -8,9 +8,8 @@ import 'styles/ui/CounterList.scss'
 
 
 
-function CounterList ({counters}) {
+function CounterList ({counters, isRefreshing, refreshTimes}) {
   const actions = useContext(CounterActions)
-  const state = useContext(CounterState)
   const [selectedCounters, setSelectedCounters] = useState(0)
 
   const countChanged = (id, value) => {
@@ -40,7 +39,7 @@ function CounterList ({counters}) {
     return (
       <div className="list-helper -selected">
         <p>{selectedCounters} Selected</p>
-        <button className="refresh-button" onClick={handleRefreshButton}>
+        <button className="refresh-button" onClick={handleRefreshButton} aria-label="refresh" role="button">
           <RefreshIcon />
         </button>
       </div>
@@ -50,9 +49,9 @@ function CounterList ({counters}) {
   const HelperRefresh = () => {
     return (
       <div className="list-helper -refresh">
-        <p className="items-count">{state.filteredCounters.length} Items</p>
-        <p className="times-count">{state.refreshTimes} Times</p>
-        <button className="refresh-button" onClick={handleRefreshButton}>
+        <p className="items-count">{counters.length} Items</p>
+        <p className="times-count">{refreshTimes} Times</p>
+        <button className="refresh-button" onClick={handleRefreshButton} aria-label="refresh" role="button">
         <RefreshIcon />
         </button>
       </div>
@@ -62,7 +61,7 @@ function CounterList ({counters}) {
   const HelperRefreshing = () => {
     return (
       <div className="list-helper -refreshing">
-        <p className="items-count">{state.filteredCounters.length} Items</p>
+        <p className="items-count">{counters.length} Items</p>
         <p className="refreshing-indicator">
           <RefreshIcon />
           Refreshing...
@@ -72,7 +71,7 @@ function CounterList ({counters}) {
   }
 
   const ListHelper = () => {
-    if (state.loading) {
+    if (isRefreshing) {
       return (<HelperRefreshing />)
     }
     if (selectedCounters) {
@@ -95,7 +94,7 @@ function CounterList ({counters}) {
   return (
     <div className="counter-list">
       <div className="list-helper-container">
-        {counters.length > 0 && <ListHelper />}
+        {counters.length > 0 ? <ListHelper /> : null}
       </div>
       <ul className="counter-items">
         {counters.map((counter) => (
