@@ -43,6 +43,7 @@ const counterReducer = (state, action) => {
       return {
         ...state,
         loading: false,
+        error: false,
         counters: [...state.counters, { ...action.payload, selected: false }]
       }
     }
