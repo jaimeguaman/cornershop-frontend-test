@@ -64,6 +64,11 @@ function CountersHome () {
     setRemoving(true)
   })
 
+  const handleRefreshCounters = useCallback(() => {
+    actions.search('')
+    actions.list()
+  })
+
   useEffect(() => {
     getCounters(true)
   }, [])
@@ -82,7 +87,13 @@ function CountersHome () {
             </div>
             <div className={`list-container ${ autoAlignLayout ? '-auto-align' : ''}`}>
               { loading && shouldShowLoading ? <Loading/> : null}
-              { hasCounters ? <CounterList counters={state.filteredCounters} isRefreshing={state.loading} refreshTimes={state.refreshTimes} /> : null}
+              { hasCounters ? <CounterList
+                                counters={state.filteredCounters}
+                                isRefreshing={state.loading}
+                                refreshTimes={state.refreshTimes}
+                                onRefresh = { handleRefreshCounters } />
+                            : null
+              }
               { noCounters ? <CountersEmpty/> : null}
               { noResults ? <CountersNoResults/> : null }
               { error ? <CountersError state={{loading: state.loading, getCounters}}/> : null }

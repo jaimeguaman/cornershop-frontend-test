@@ -6,9 +6,7 @@ import { ReactComponent as RefreshIcon } from 'assets/refresh-icon.svg'
 
 import 'styles/ui/CounterList.scss'
 
-
-
-function CounterList ({counters, isRefreshing, refreshTimes}) {
+function CounterList ({counters, isRefreshing, refreshTimes, onRefresh = () => {} }) {
   const actions = useContext(CounterActions)
   const [selectedCounters, setSelectedCounters] = useState(0)
 
@@ -31,8 +29,7 @@ function CounterList ({counters, isRefreshing, refreshTimes}) {
   }
 
   const handleRefreshButton = useCallback( () => {
-    actions.search('')
-    actions.list()
+    typeof onRefresh === 'function' && onRefresh()
   }, [])
 
   const HelperSelected = () => {
