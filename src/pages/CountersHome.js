@@ -28,11 +28,11 @@ function CountersHome () {
 
   //component state
   const loading = state.loading && !state.error
-  const hasCounters = state.counters?.length && !state.error && (!state.loading || !shouldShowLoading)
-  const hasFilteredCounters = state.filteredCounters?.length && !state.error && !state.loading
-  const error = state.error && !state.loading
-  const noCounters = !hasCounters && !state.loading && !error
-  const autoAlignLayout = (loading && shouldShowLoading) || (!hasFilteredCounters && hasCounters && !loading) || noCounters || error
+  const isError = state.error && !state.loading && !isRemoving
+  const hasCounters = state.counters?.length && !isError && (!state.loading || !shouldShowLoading)
+  const hasFilteredCounters = state.filteredCounters?.length && !isError && !state.loading
+  const noCounters = !hasCounters && !state.loading && !isError
+  const autoAlignLayout = (loading && shouldShowLoading) || (!hasFilteredCounters && hasCounters && !loading) || noCounters || isError
   const justOneSelected = selectedCounters ? selectedCounters.length == 1 : false
   const atLeastOneSelected = selectedCounters? selectedCounters.length >= 1 : false
   const noResults = !hasFilteredCounters && hasCounters && !loading && isSearching
@@ -96,7 +96,7 @@ function CountersHome () {
               }
               { noCounters ? <CountersEmpty/> : null}
               { noResults ? <CountersNoResults/> : null }
-              { error ? <CountersError state={{loading: state.loading, getCounters}}/> : null }
+              { isError ? <CountersError state={{loading: state.loading, getCounters}}/> : null }
             </div>
           </div>
         </div>
