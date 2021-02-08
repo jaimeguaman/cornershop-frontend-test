@@ -1,20 +1,19 @@
 
 import { useEffect, useContext, useState, useCallback } from 'react'
-import { Link } from "react-router-dom";
-
+import { useHistory } from "react-router-dom";
 import CounterState, { CounterActions } from 'context/counter'
 import CounterList from 'components/CounterList'
 import FooterActions from 'components/FooterActions'
 import Loading from 'components/Loading'
 import Search from 'components/Search'
 import CounterRemove from 'components/CounterRemove'
+import CountersShare from 'components/CountersShare'
 import CountersError from 'components/CountersError'
 import CountersEmpty from 'components/CountersEmpty'
 import CountersNoResults from 'components/CountersNoResults'
 
 import { ReactComponent as PlusIcon } from 'assets/plus-icon.svg'
 import { ReactComponent as TrashIcon } from 'assets/trash-icon.svg'
-import { ReactComponent as ShareIcon } from 'assets/share-icon.svg'
 
 import 'styles/pages/CountersHome.scss'
 
@@ -25,6 +24,8 @@ function CountersHome () {
   const [isRemoving, setRemoving] = useState(false)
   const [isRefreshing, setRefreshing] = useState(false)
   const [isSearching, setIsSearching] = useState(false)
+  const history = useHistory()
+
   const selectedCounters = state.counters?.filter(c => c.selected)
 
   //component state
@@ -62,6 +63,10 @@ function CountersHome () {
     } else {
       actions.filteredList(state.counters)
     }
+  }
+
+  const goToAddCounters = () => {
+    history.push('/counters/add')
   }
 
   const setFilterText = useCallback((text) => {
@@ -123,14 +128,12 @@ function CountersHome () {
           {justOneSelected && <button className="standard-button" onClick={handleRemoveIntent}>
             <TrashIcon />
           </button>}
-          {atLeastOneSelected && <button className="standard-button">
-            <ShareIcon />
-          </button>}
+          {atLeastOneSelected ? <CountersShare counters={state.filteredCounters}/> : null}
         </div>
         <div className="to-right">
-          <a className="accent-button create-counter-button" href="/counters/add/">
+          <button className="accent-button create-counter-button" onClick={goToAddCounters}>
             <PlusIcon/>
-          </a>
+          </button>
         </div>
       </FooterActions>
     </div>
