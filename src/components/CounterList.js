@@ -11,6 +11,7 @@ function CounterList ({counters, isRefreshing, refreshTimes, onRefresh = () => {
   const actions = useContext(CounterActions)
   const [selectedCounters, setSelectedCounters] = useState(0)
   const [lastErrorCountPayload, setLastErrorCountPayload] = useState({})
+  const [isRetrying, setRetrying] = useState(false)
 
   const countChanged = (id, value) => {
     let action
@@ -31,6 +32,7 @@ function CounterList ({counters, isRefreshing, refreshTimes, onRefresh = () => {
           setLastErrorCountPayload({id, value, counter})
         })
     }
+    return action
   }
 
   const selectedChanged = (id) => {
@@ -92,8 +94,12 @@ function CounterList ({counters, isRefreshing, refreshTimes, onRefresh = () => {
 
   const CounterChangedError = () => {
     const errorMessage = navigator.onLine ? 'An error happened while creating the counter' : 'Internet connection appears to be offline'
+
     const handleRetryClick = () => {
+      setRetrying(true)
       countChanged(lastErrorCountPayload.id, lastErrorCountPayload.value)
+        .then(() => {setRetrying(false)})
+        .catch(() => {setRetrying(false)})
     }
     const handleDismiss = () => {
       setLastErrorCountPayload({})
@@ -103,11 +109,11 @@ function CounterList ({counters, isRefreshing, refreshTimes, onRefresh = () => {
     return (
       <MessageBox width="310px">
         <div className="remove-counter-error-block">
-          <h2 className="large-title">{`Couldn’t update “${lastErrorCountPayload.counter.title}”  to ${lastErrorCountPayload.counter.count + 1}`}</h2>
+          <h2 className="large-title">{`Couldn’t update “${lastErrorCountPayload.counter.title}”  to ${lastErrorCountPayload.counter.count + lastErrorCountPayload.value}`}</h2>
           <p className="secondary-text">{errorMessage}</p>
           <div className="message-box-controls">
             <button
-              disabled={isRefreshing}
+              disabled={isRetrying}
               onClick={handleRetryClick}
               className="accent-button"
               aria-labelledby="retry"
@@ -115,7 +121,7 @@ function CounterList ({counters, isRefreshing, refreshTimes, onRefresh = () => {
                 Retry
               </button>
             <button
-              disabled={isRefreshing}
+              disabled={isRetrying}
               onClick={handleDismiss}
               className="accent-secondary-button"
               aria-labelledby="dismiss"
