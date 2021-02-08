@@ -117,9 +117,9 @@ function CountersHome () {
           </button>}
         </div>
         <div className="to-right">
-          <Link className="accent-button create-counter-button" to="/counters/add/">
+          <a className="accent-button create-counter-button" href="/counters/add/">
             <PlusIcon/>
-          </Link>
+          </a>
         </div>
       </FooterActions>
     </div>

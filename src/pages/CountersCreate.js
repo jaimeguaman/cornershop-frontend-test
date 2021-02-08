@@ -32,7 +32,14 @@ const ModalHeader = ({ state }) => {
     e.preventDefault()
   }, [])
   return (
-    <button disabled={!state.canSave || state.loading} className="accent-button" onClick={handleSaveClick}>Save</button>
+    <button
+      disabled={!state.canSave || state.loading}
+      className="accent-button"
+      onClick={handleSaveClick}
+      role="button"
+      aria-labelledby="save">
+        Save
+      </button>
   )
 }
 

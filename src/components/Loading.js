@@ -4,7 +4,7 @@ import 'styles/ui/Loading.scss'
 
 function Loading () {
   return (
-    <div className="loading-indicator">
+    <div className="loading-indicator" role="presentation">
       <LoadingIcon />
     </div>
   )

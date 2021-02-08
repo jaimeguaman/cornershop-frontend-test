@@ -4,7 +4,14 @@ function CountersError ({ state }) {
     <div className="feedback-block">
       <h2 className="large-title">Couldn't load the counters</h2>
       <p className="secondary-text">{message}</p>
-      <button className="accent-secondary-button" disabled={state.loading} onClick={() => state.getCounters(true) }>Retry</button>
+      <button
+        className="accent-secondary-button"
+        disabled={state.loading}
+        onClick={() => state.getCounters(true) }
+        aria-labelledby="retry"
+        role="button">
+          Retry
+      </button>
     </div>
   )
 }

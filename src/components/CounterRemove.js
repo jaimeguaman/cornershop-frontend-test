@@ -31,6 +31,9 @@ const CounterRemove = ({ counters , onRemoved, onError }) => {
   counter = counter[0]
 
   const handleRemoveConfirm = useCallback( (e) => {
+    if (state.loading) {
+      return false
+    }
     removeCounter(counter, actions.remove)
       .then(() => {
         typeof onRemoved === 'function' && onRemoved(true, counter)
@@ -63,16 +66,44 @@ const CounterRemove = ({ counters , onRemoved, onError }) => {
         <h2 className="large-title">{`Delete the “${counter?.title}” counter?`}</h2>
         <p className="secondary-text">This cannot be undone.</p>
         <div className="message-box-controls">
-          <button disabled={state.loading} onClick={handleCancel} className="accent-button">Cancel</button>
-          <button disabled={state.loading} onClick={handleRemoveConfirm} className="accent-secondary-button destructive-button">Delete</button>
+          <button
+            disabled={state.loading}
+            onClick={handleCancel}
+            className="accent-button"
+            role="button"
+            aria-labelledby="cancel">
+              Cancel
+          </button>
+          <button
+            disabled={state.loading}
+            onClick={handleRemoveConfirm}
+            className="accent-secondary-button destructive-button"
+            role="button"
+            aria-labelledby="delete">
+              Delete
+            </button>
         </div>
       </div> : null }
       { state.error ? <div className="remove-counter-error-block">
         <h2 className="large-title">{`Couldn’t delete “${counter?.title}”`}</h2>
         <p className="secondary-text">{errorMessage}</p>
         <div className="message-box-controls">
-          <button disabled={state.loading} onClick={handleRemoveConfirm} className="accent-button">Retry</button>
-          <button disabled={state.loading} onClick={handleOnErrorCancel} className="accent-secondary-button">Dismiss</button>
+          <button
+            disabled={state.loading}
+            onClick={handleRemoveConfirm}
+            className="accent-button"
+            aria-labelledby="retry"
+            role="button">
+              Retry
+            </button>
+          <button
+            disabled={state.loading}
+            onClick={handleOnErrorCancel}
+            className="accent-secondary-button"
+            aria-labelledby="dismiss"
+            role="button">
+              Dismiss
+            </button>
         </div>
       </div> : null }
 

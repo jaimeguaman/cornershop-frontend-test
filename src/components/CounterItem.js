@@ -29,15 +29,19 @@ function CounterItem ({item = {}, onCountChanged, onToggleSelected}) {
       <p className="counter-title js-can-select">{item.title}</p>
       <div className="counter-controls">
         <button
+          role="button"
           className="decrease-button"
           disabled={isDecrementDisabled}
-          onClick={(e) => handleChange(e, -1)}>
+          onClick={(e) => handleChange(e, -1)}
+          aria-label="decrement">
           <MinusIcon />
         </button>
         <p className={`${isDecrementDisabled ? '-disabled' : '' }`}>{item.count}</p>
         <button
+          role="button"
           className="increase-button"
-          onClick={(e) => handleChange(e, 1)}>
+          onClick={(e) => handleChange(e, 1)}
+          aria-label="increment">
             <PlusIcon />
         </button>
       </div>

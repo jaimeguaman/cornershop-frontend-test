@@ -28,7 +28,10 @@ function Search ({ onChange = () => {}, text}) {
           placeholder="Search Counters"
           onChange={handleChange}
           value={text}
-          type="text" />
+          type="text"
+          role="searchbox"
+          aria-labelledby="search"
+          />
         <button className="standard-button" type="button">Cancel</button>
       </div>
     </form>

@@ -12,16 +12,20 @@ function Modal (props) {
           <div className="viewport-wrapper -flat -full-height">
             <div className="modal-container">
                 <div className="modal-header">
-                  <button onClick={ handleClose } className="close-modal-button">
+                  <button
+                    onClick={ handleClose }
+                    className="close-modal-button"
+                    role="button"
+                    aria-label="close">
                     <CrossIcon/>
                   </button>
-                  <h2 className="large-title -to-left">{props.title}</h2>
+                  <h2 className="large-title -to-left">{props.title || 'Counters'}</h2>
                   <div className="header-actions">
-                    {props.header}
+                    {props?.header}
                   </div>
                 </div>
                 <div className="modal-body">
-                  {props.body}
+                  {props?.body}
                 </div>
             </div>
           </div>
