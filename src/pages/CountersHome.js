@@ -23,12 +23,13 @@ function CountersHome () {
   const state = useContext(CounterState)
   const [shouldShowLoading, setShouldShowLoading] = useState(true)
   const [isRemoving, setRemoving] = useState(false)
+  const [isRefreshing, setRefreshing] = useState(false)
   const [isSearching, setIsSearching] = useState(false)
   const selectedCounters = state.counters?.filter(c => c.selected)
 
   //component state
   const loading = state.loading && !state.error
-  const isError = state.error && !state.loading && !isRemoving
+  const isError = state.error && !state.loading && !isRemoving && isRefreshing
   const hasCounters = state.counters?.length && !isError && (!state.loading || !shouldShowLoading)
   const hasFilteredCounters = state.filteredCounters?.length && !isError && !state.loading
   const noCounters = !hasCounters && !state.loading && !isError
@@ -38,9 +39,11 @@ function CountersHome () {
   const noResults = !hasFilteredCounters && hasCounters && !loading && isSearching
 
   const getCounters = useCallback((showLoading) => {
+    setRefreshing(true)
     setShouldShowLoading(showLoading)
     return actions.list()
             .then(() => {
+              setRefreshing(false)
               setShouldShowLoading(false)
             })
   }, [])
@@ -65,8 +68,10 @@ function CountersHome () {
   })
 
   const handleRefreshCounters = useCallback(() => {
+    setRefreshing(true)
     actions.search('')
     actions.list()
+      .then(() => {setRefreshing(false)})
   })
 
   useEffect(() => {
@@ -91,7 +96,8 @@ function CountersHome () {
                                 counters={state.filteredCounters}
                                 isRefreshing={state.loading}
                                 refreshTimes={state.refreshTimes}
-                                onRefresh = { handleRefreshCounters } />
+                                onRefresh={ handleRefreshCounters }
+                              />
                             : null
               }
               { noCounters ? <CountersEmpty/> : null}

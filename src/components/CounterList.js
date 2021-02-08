@@ -1,6 +1,7 @@
 import { useContext, useCallback, useEffect, useState } from 'react'
 import { CounterActions } from 'context/counter'
 import CounterItem from 'components/CounterItem'
+import MessageBox from 'components/MessageBox'
 import { getCounter } from 'utils'
 import { ReactComponent as RefreshIcon } from 'assets/refresh-icon.svg'
 
@@ -9,15 +10,26 @@ import 'styles/ui/CounterList.scss'
 function CounterList ({counters, isRefreshing, refreshTimes, onRefresh = () => {} }) {
   const actions = useContext(CounterActions)
   const [selectedCounters, setSelectedCounters] = useState(0)
+  const [lastErrorCountPayload, setLastErrorCountPayload] = useState({})
 
   const countChanged = (id, value) => {
+    let action
     switch (value) {
       case 1:
-        actions.increment(id)
+        action = actions.increment(id)
         break
       case -1:
-        actions.decrement(id)
+        action = actions.decrement(id)
         break
+    }
+    if (action) {
+      action.then(() => {
+          setLastErrorCountPayload({})
+        })
+        .catch(() => {
+          const counter = getCounter(counters, id)
+          setLastErrorCountPayload({id, value, counter})
+        })
     }
   }
 
@@ -78,6 +90,44 @@ function CounterList ({counters, isRefreshing, refreshTimes, onRefresh = () => {
     }
   }
 
+  const CounterChangedError = () => {
+    const errorMessage = navigator.onLine ? 'An error happened while creating the counter' : 'Internet connection appears to be offline'
+    const handleRetryClick = () => {
+      countChanged(lastErrorCountPayload.id, lastErrorCountPayload.value)
+    }
+    const handleDismiss = () => {
+      setLastErrorCountPayload({})
+      handleRefreshButton()
+    }
+
+    return (
+      <MessageBox width="310px">
+        <div className="remove-counter-error-block">
+          <h2 className="large-title">{`Couldn’t update “${lastErrorCountPayload.counter.title}”  to ${lastErrorCountPayload.counter.count + 1}`}</h2>
+          <p className="secondary-text">{errorMessage}</p>
+          <div className="message-box-controls">
+            <button
+              disabled={isRefreshing}
+              onClick={handleRetryClick}
+              className="accent-button"
+              aria-labelledby="retry"
+              role="button">
+                Retry
+              </button>
+            <button
+              disabled={isRefreshing}
+              onClick={handleDismiss}
+              className="accent-secondary-button"
+              aria-labelledby="dismiss"
+              role="button">
+                Dismiss
+              </button>
+          </div>
+        </div>
+      </MessageBox>
+    )
+  }
+
   useEffect(() => {
     let selected = 0
     counters.map(counter => {
@@ -98,6 +148,7 @@ function CounterList ({counters, isRefreshing, refreshTimes, onRefresh = () => {
           <CounterItem onCountChanged={countChanged} onToggleSelected={selectedChanged} key={counter.id} item={counter} />
         ))}
       </ul>
+      { lastErrorCountPayload.id ? <CounterChangedError></CounterChangedError> : null }
     </div>
   );
 }
