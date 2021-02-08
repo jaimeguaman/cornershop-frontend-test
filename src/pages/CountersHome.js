@@ -104,6 +104,7 @@ function CountersHome () {
       <FooterActions>
         {isRemoving && atLeastOneSelected &&
           <CounterRemove
+            counters={state.filteredCounters}
             onRemoved={() => setRemoving(false)}
             onError={() => setRemoving(false)} />
         }

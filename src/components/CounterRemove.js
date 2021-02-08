@@ -16,11 +16,11 @@ const removeCounter = ( counter, removeFn ) => {
   return removeFn(counter.id)
 }
 
-const CounterRemove = ({ onRemoved, onError}) => {
+const CounterRemove = ({ counters , onRemoved, onError }) => {
   const state = useContext(CounterState)
   const actions = useContext(CounterActions)
   const [errorMessage, setErrorMessage] = useState('An error happened while trying to delete the counter')
-  let counter = state.filteredCounters.filter(c => c.selected)
+  let counter = counters.filter(c => c.selected)
 
   if (!counter.length) {
     typeof onError=== 'function' && onError('No selected counter')
