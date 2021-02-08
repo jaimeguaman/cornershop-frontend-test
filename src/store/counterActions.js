@@ -22,16 +22,17 @@ const CounterActions = (dispatch, service) => {
     increment(id) {
       dispatch({type: 'INCREMENT', payload: id})
       return service.increment(id)
-        .then(() => { }, () => {
+        .catch(() => {
           dispatch({type: 'DECREMENT', payload: id}) // RESTORE WHEN FAILS
+          return counterActionError()
         })
-      .catch(counterActionError)
     },
     decrement(id) {
       dispatch({type: 'DECREMENT', payload: id})
       return service.decrement(id)
-        .then(() => {}, () => {
+        .catch(() => {
           dispatch({type: 'INCREMENT', payload: id}) // RESTORE WHEN FAILS
+          return counterActionError()
         })
     },
     add (title) {
@@ -40,7 +41,7 @@ const CounterActions = (dispatch, service) => {
         .then((counter) => {
           dispatch({type: 'ADD', payload: counter})
         })
-      .catch(counterActionError)
+        .catch(counterActionError)
     },
     remove (id) {
       dispatch({type: 'LOADING_START'})
