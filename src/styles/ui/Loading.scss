@@ -24,7 +24,7 @@
   justify-content: center;
   align-items: center;
   svg {
-    overflow: visible;
+    overflow: visible !important;
     .c1 {
       animation: fadeLoop 1s infinite;
     }
