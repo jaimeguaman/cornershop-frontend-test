@@ -23,9 +23,9 @@ const ModalBody = ({onHandleSelected = () => {} }) => {
       {state.loading ? <div className="loader-container"><Loading /></div> : null}
       {hasExamples ? state.examples.map((example, i) => {
         return (
-          <div className="example-category">
+          <div className="example-category" key={`cat_${i}`}>
             <p>{example.category}</p>
-            <ul className="example-items" key={`cat_${i}`}>
+            <ul className="example-items">
               {example.items.map((item, j) => {
                 return (
                   <li className="example-item" key={`item_${i}_${j}`}>
