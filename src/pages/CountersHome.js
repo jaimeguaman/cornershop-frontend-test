@@ -51,6 +51,11 @@ function CountersHome () {
   const filterCounters = (text) => {
     if (text) {
       setIsSearching(true)
+      state.counters.map((counter) => {
+        if (counter.selected) {
+          actions.toggleSelect(counter.id)
+        }
+      })
       actions.filteredList(
         state.counters.filter(counter => !text ? true : counter.title.toLowerCase().includes(text.toLowerCase()))
       )
