@@ -149,7 +149,8 @@ I tried to write meaningful message commits most of the time. I hate non explana
   - **Testing and Code Refactoring**
         I sticked with what I felt is at the moment the most expressive way of write tests.
         `testing-library` with `react-testing-library` was a mind blow for me.
-        Some big refactors were made on this phase.
+        Some big refactors were made on this phase. My full-time work left me no enough time
+        to do a near 100% test coverage, but I tried the best I could in the timeframe given
 
 
 ## final thoughts
