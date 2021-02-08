@@ -5,6 +5,7 @@ import Modal from 'components/Modal'
 import CounterState, { CounterActions } from 'context/counter'
 import Loading from 'components/Loading'
 import MessageBox from 'components/MessageBox'
+import CountersExample from 'components/CountersExample'
 
 import 'styles/pages/CountersCreate.scss'
 
@@ -45,6 +46,8 @@ const ModalHeader = ({ state }) => {
 
 const ModalBody = ({ state }) => {
   const history = useHistory()
+  const [showExamples, setShowExamples] = useState(false)
+  const isLoading = state.loading && !showExamples
 
   const handleInputChange = useCallback( () => {
     const title = state.titleRef.current.value
@@ -72,6 +75,19 @@ const ModalBody = ({ state }) => {
     e.preventDefault()
   }, [])
 
+  const handleShowExamples = (e) => {
+    setShowExamples(true)
+    e.preventDefault()
+  }
+
+  const handleSelectedExample = (title) => {
+    if (state.titleRef.current) {
+      state.titleRef.current.value = title
+    }
+    state.setCanSave(true)
+    setShowExamples(false)
+  }
+
   useEffect(() => {
     if (state.titleRef.current) {
       state.titleRef.current.focus()
@@ -79,28 +95,31 @@ const ModalBody = ({ state }) => {
   }, [])
 
   return (
-    <form
-      key="create-form"
-      className="standard-form"
-      onSubmit={handleFormSubmit}>
-      <div className={`form-control ${ state.loading ? '-inactive' : '' }`}>
-        <label htmlFor="new-counter-title-input">Name</label>
-        <input
-          onKeyDown={handleInputChange}
-          maxLength="150"
-          placeholder="Cups of coffee"
-          id="new-counter-title-input"
-          ref={state.titleRef}
-          type="text"
-        />
-        <p className="feedback-text">
-          Give it a name. Creative block? See <a href="">Examples.</a>
-        </p>
-      </div>
-      <div className="loading-container">
-        {state.loading && <Loading />}
-      </div>
-    </form>
+    <div>
+      <form
+        key="create-form"
+        className="standard-form"
+        onSubmit={handleFormSubmit}>
+        <div className={`form-control ${ isLoading ? '-inactive' : '' }`}>
+          <label htmlFor="new-counter-title-input">Name</label>
+          <input
+            onKeyDown={handleInputChange}
+            maxLength="150"
+            placeholder="Cups of coffee"
+            id="new-counter-title-input"
+            ref={state.titleRef}
+            type="text"
+          />
+          <p className="feedback-text">
+            Give it a name. Creative block? See <button className="link-button examples-button" role="button" onClick={handleShowExamples}>Examples.</button>
+          </p>
+        </div>
+        <div className="loading-container">
+          {isLoading ? <Loading /> : null}
+        </div>
+      </form>
+      {showExamples ? <CountersExample onSelected={handleSelectedExample} onClose={() => setShowExamples(false)} /> : null}
+    </div>
   )
 }
 
@@ -111,8 +130,7 @@ function CountersCreate () {
   const titleRef = useRef()
   const history = useHistory()
   const errorMessage = navigator.onLine ? 'An error happened while creating the counter' : 'Internet connection appears to be offline'
-  const stateForModalBody = {setCanSave, titleRef, saveCounter, actions, loading: state.loading}
-  const stateForModalHeader = {canSave, titleRef, saveCounter, actions, loading: state.loading}
+  const stateForModalChildren = {setCanSave, canSave, titleRef, saveCounter, actions, loading: state.loading}
 
   const handleModalClosed = () => {
     if (state.error) {
@@ -126,8 +144,8 @@ function CountersCreate () {
       <Modal
       title="Create counter"
       onModalClose={ handleModalClosed }
-      body={<ModalBody state={stateForModalBody} />}
-      header={<ModalHeader state={stateForModalHeader} />}
+      body={<ModalBody state={stateForModalChildren} />}
+      header={<ModalHeader state={stateForModalChildren} />}
       />
       {state.error && <MessageBox width="310px">
         <div className="error-message-block">

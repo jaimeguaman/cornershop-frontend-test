@@ -59,6 +59,14 @@ const CounterActions = (dispatch, service) => {
     },
     resetError () {
       dispatch({type: 'ERROR', payload: false})
+    },
+    examples () {
+      dispatch({type: 'LOADING_START'})
+      return service.examples()
+        .then((data) => {
+          dispatch({type: 'EXAMPLES', payload: data})
+        })
+        .catch(counterActionError)
     }
   }
 }

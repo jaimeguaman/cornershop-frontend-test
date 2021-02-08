@@ -4,7 +4,8 @@ const initialState = {
   counters: [],
   filteredCounters: [],
   refreshTimes: 0,
-  searchText: ''
+  searchText: '',
+  examples: []
 }
 
 export default  initialState

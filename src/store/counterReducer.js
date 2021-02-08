@@ -55,6 +55,14 @@ const counterReducer = (state, action) => {
     case 'SEARCH_TEXT': {
       return {...state, searchText: action.payload}
     }
+    case 'EXAMPLES': {
+      return {
+        ...state,
+        loading: false,
+        error: false,
+        examples: action.payload
+      }
+    }
   }
 }
 

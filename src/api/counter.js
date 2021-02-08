@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {CountersExampleTitles} from 'utils'
 
 const CounterService = axios.create({
   baseURL: process.env.REACT_APP_COUNTER_API_URL + 'counter',
@@ -55,5 +56,10 @@ export default {
     }
     return CounterService.post('/dec/', { id })
             .then(getResponseData, handleErrorResponse)
+  },
+  examples () {
+    return getResponseData({
+      data: CountersExampleTitles
+    })
   }
 }

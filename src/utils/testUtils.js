@@ -1,9 +1,12 @@
+import {CountersExampleTitles} from 'utils'
+
 const mockedCounters = [
   { 'id': 'kkvgaqvv','title': 'counter1', 'count': 0 },
   { 'id': 'kkvgaqxd','title': 'counter2', 'count': 2 },
   { 'id': 'kkvgaqcd','title': 'counter3', 'count': 9 },
   { 'id': 'kkvgaqxx','title': 'counter4', 'count': 3 }
 ]
+
 
 const mockedCounterService = (_debugRejection = false) => {
 
@@ -71,6 +74,13 @@ const mockedCounterService = (_debugRejection = false) => {
         return handleErrorResponse()
       } else {
         return getResponseData(id)
+      }
+    },
+    examples () {
+      if ( _debugRejection) {
+        return handleErrorResponse()
+      } else {
+        return getResponseData(CountersExampleTitles)
       }
     }
   }
