@@ -111,7 +111,7 @@ const ModalBody = ({ state }) => {
             type="text"
           />
           <p className="feedback-text">
-            Give it a name. Creative block? See <button className="link-button examples-button" role="button" onClick={handleShowExamples}>Examples.</button>
+            Give it a name. Creative block? See <button type="button" className="link-button examples-button" role="button" onClick={handleShowExamples}>Examples.</button>
           </p>
         </div>
         <div className="loading-container">
